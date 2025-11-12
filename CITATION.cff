@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Professional Resume Builder"
+abstract: "A modern, flexible resume builder with LaTeX export and professional templates"
+authors:
+  - family-names: "Ziad"
+    given-names: "Fahad Nadim"
+    email: "f.n.ziad@gmail.com"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"  # Add your ORCID if available
+repository-code: "https://github.com/fnziad/resume-builder"
+url: "https://github.com/fnziad/resume-builder"
+keywords:
+  - resume
+  - cv
+  - latex
+  - builder
+  - career
+license: "All Rights Reserved"
+date-released: 2025-01-13
+version: "1.0.0"
+
+preferred-citation:
+  type: software
+  authors:
+    - family-names: "Ziad"
+      given-names: "Fahad Nadim"
+      email: "f.n.ziad@gmail.com"
+  title: "Professional Resume Builder"
+  year: 2025
+  url: "https://github.com/fnziad/resume-builder"
+  notes: "A modern resume builder with LaTeX export capabilities"

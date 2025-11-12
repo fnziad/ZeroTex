@@ -1,0 +1,51 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (SECURITY: Never commit secrets!)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# GPG keys and signatures (keep private!)
+*.gpg
+*.key
+*.pem
+*.p12
+.gnupg/
+
+# Distribution artifacts
+/dist/
+*.tar.gz
+*.zip
+*.asc
+
+# Secrets detection
+.secrets.baseline.tmp
+
+# Husky
+.husky/_

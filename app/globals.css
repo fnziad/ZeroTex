@@ -1,0 +1,239 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 215 25% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 215 25% 15%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 215 25% 15%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 1rem;
+    --chart-1: 221 83% 53%;
+    --chart-2: 262 83% 58%;
+    --chart-3: 291 64% 42%;
+    --chart-4: 331 78% 58%;
+    --chart-5: 6 78% 57%;
+  }
+
+  .dark {
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 6%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 6%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 224 76% 48%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: "Inter", sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Grid pattern for background */
+  .bg-grid-slate-900\/\[0\.02\] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.02)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
+  
+  .dark .bg-grid-slate-100\/\[0\.02\] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(241 245 249 / 0.02)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
+}
+
+/* Import professional fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&family=Raleway:wght@300;400;500;600;700&family=Roboto+Mono&family=Source+Sans+3:wght@300;400;500;600;700&display=swap");
+
+/* Font classes for different templates */
+.font-modern {
+  font-family: "Inter", sans-serif;
+}
+
+.font-classic {
+  font-family: "Merriweather", serif;
+}
+
+.font-technical {
+  font-family: "Source Sans 3", sans-serif;
+}
+
+.font-creative {
+  font-family: "Raleway", sans-serif;
+}
+
+.font-code {
+  font-family: "Roboto Mono", monospace;
+}
+
+/* Custom animations */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Resume preview styles */
+.resume-preview {
+  @apply transition-all duration-300 border rounded p-6 shadow-sm;
+}
+
+.light .resume-preview {
+  @apply bg-white text-gray-900 border-gray-200 shadow-gray-100;
+}
+
+.dark .resume-preview {
+  @apply bg-slate-900 text-slate-100 border-slate-800 shadow-slate-900/50;
+}
+
+.resume-section-title {
+  @apply font-bold text-lg border-b mb-2 pb-1 transition-colors duration-300;
+}
+
+.dark .resume-section-title {
+  @apply border-blue-500 text-blue-400;
+}
+
+.light .resume-section-title {
+  @apply border-gray-800 text-gray-900;
+}
+
+/* Template styles */
+.template-card {
+  @apply transition-all duration-300 hover:shadow-lg;
+}
+
+.dark .template-card {
+  @apply hover:shadow-blue-900/30;
+}
+
+.light .template-card {
+  @apply hover:shadow-blue-500/20;
+}
+
+/* Template previews */
+.template-preview {
+  @apply relative h-full w-full overflow-hidden rounded-md border;
+  background-size: cover;
+  background-position: top center;
+}
+
+/* Cyber theme elements for dark mode */
+.dark .cyber-glow {
+  text-shadow: 0 0 5px rgba(66, 153, 225, 0.5), 0 0 10px rgba(66, 153, 225, 0.3);
+}
+
+.dark .cyber-border {
+  box-shadow: 0 0 5px rgba(66, 153, 225, 0.5);
+}
+
+.dark .cyber-button {
+  @apply bg-blue-900 border border-blue-700 text-blue-100;
+  box-shadow: 0 0 10px rgba(66, 153, 225, 0.3);
+  transition: all 0.3s ease;
+}
+
+.dark .cyber-button:hover {
+  @apply bg-blue-800;
+  box-shadow: 0 0 15px rgba(66, 153, 225, 0.5);
+}
+/* Ensure smooth transitions between themes */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-slate-900 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full hover:bg-slate-400 dark:hover:bg-slate-600;
+}
+
+/* Selection */
+::selection {
+  @apply bg-blue-500/20 text-blue-900 dark:text-blue-100;
+}
+
+/* Focus rings */
+:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-background rounded-xl;
+}
+.dark {
+  color-scheme: dark;
+}
+
+/* Ensure smooth transitions between themes */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

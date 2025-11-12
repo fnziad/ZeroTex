@@ -1,0 +1,76 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import type { Skills } from "@/lib/resume-types"
+
+interface SkillsFormProps {
+  data: Skills
+  updateData: (data: Skills) => void
+}
+
+export default function SkillsForm({ data, updateData }: SkillsFormProps) {
+  const [formData, setFormData] = useState<Skills>(data)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    const updatedData = { ...formData, [name]: value }
+    setFormData(updatedData)
+    updateData(updatedData)
+  }
+
+  return (
+    <div className="space-y-4">
+      <h2 className="text-xl font-semibold">Technical Skills</h2>
+
+      <div className="grid gap-4">
+        <div>
+          <Label htmlFor="languages">Programming Languages</Label>
+          <Input
+            id="languages"
+            name="languages"
+            value={formData.languages}
+            onChange={handleChange}
+            placeholder="Java, Python, JavaScript, C++, etc."
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="frameworks">Frameworks & Tools</Label>
+          <Input
+            id="frameworks"
+            name="frameworks"
+            value={formData.frameworks}
+            onChange={handleChange}
+            placeholder="React, Node.js, Docker, Git, etc."
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="databases">Database Systems</Label>
+          <Input
+            id="databases"
+            name="databases"
+            value={formData.databases}
+            onChange={handleChange}
+            placeholder="MySQL, PostgreSQL, MongoDB, etc."
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="other">Other Skills</Label>
+          <Input
+            id="other"
+            name="other"
+            value={formData.other}
+            onChange={handleChange}
+            placeholder="Cloud platforms, Design tools, etc."
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
