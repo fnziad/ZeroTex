@@ -1,5 +1,9 @@
+![Node.js](https://img.shields.io/badge/node-%5E18.x-brightgreen?logo=node.js)
+![React](https://img.shields.io/badge/react-%5E18.3.1-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/typescript-%5E5.x-3178C6?logo=typescript)
 ![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-blue)
-![Copyright](https://img.shields.io/badge/copyright-%C2%A9%202025%20Fahad%20Nadim%20Ziad-blue)
+[![GitHub stars](https://img.shields.io/github/stars/fnziad/ZeroTex?style=social)](https://github.com/fnziad/ZeroTex/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/fnziad/ZeroTex?style=social)](https://github.com/fnziad/ZeroTex/network/members)
 
 # ZeroTex
 
