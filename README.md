@@ -94,3 +94,15 @@ Fahad Nadim Ziad. ZeroTex: Professional Resume Builder. https://github.com/fnzia
 
 - Built with Next.js, React, Tailwind CSS, TypeScript, and shadcn/ui.
 - Inspired by the LaTeX typesetting system and modern design best practices.
+
+---
+
+## 🖼️ Screenshots
+
+| Home Page (Light Mode)                                  | Builder UI (Light)                               | Builder UI (Dark, Example Loaded)                                              |
+| ------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
+| ![Home Page](public/screenshots/homepage_lightmode.png) | ![Builder UI](public/screenshots/builder_ui.png) | ![Builder UI Dark Mode](public/screenshots/builderui_darkmode_loadexample.png) |
+
+| Print/Export PDF                                                | Overleaf Import                                            |
+| --------------------------------------------------------------- | ---------------------------------------------------------- |
+| ![Print Resume as PDF](public/screenshots/print_resume_pdf.png) | ![Overleaf Import](public/screenshots/overleaf_import.png) |
