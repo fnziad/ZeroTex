@@ -1,4 +1,3 @@
-[![CI/CD](https://github.com/fnziad/ZeroTex/actions/workflows/ci.yml/badge.svg)](https://github.com/fnziad/ZeroTex/actions)
 ![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-blue)
 ![Copyright](https://img.shields.io/badge/copyright-%C2%A9%202025%20Fahad%20Nadim%20Ziad-blue)
 
