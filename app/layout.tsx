@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { usePathname } from "next/navigation"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -45,6 +46,7 @@ export default function RootLayout({
               <Toaster />
             </div>
           )}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
