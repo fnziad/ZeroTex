@@ -76,10 +76,10 @@ For permission requests, contact: f.n.ziad@gmail.com
 
 ---
 
-## 🛡️ Security & Enforcement
+## 🛡️ Security & Legal Notice
 
-- All builds are watermarked and cryptographically signed.
-- See [`ENFORCEMENT.md`](./ENFORCEMENT.md) for legal protection and anti-plagiarism steps.
+- All builds are watermarked and cryptographically signed for author protection.
+- Legal protection and anti-plagiarism steps are in place. For details or concerns, contact the author directly at f.n.ziad@gmail.com.
 
 ---
 
