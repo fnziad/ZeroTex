@@ -1,15 +1,15 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: "Professional Resume Builder"
-abstract: "A modern, flexible resume builder with LaTeX export and professional templates"
+title: "ZeroTex"
+abstract: "ZeroTex is a modern, flexible resume builder with LaTeX export and professional templates."
 authors:
   - family-names: "Ziad"
     given-names: "Fahad Nadim"
     email: "f.n.ziad@gmail.com"
     # orcid: "https://orcid.org/0000-0000-0000-0000"  # Add your ORCID if available
-repository-code: "https://github.com/fnziad/resume-builder"
-url: "https://github.com/fnziad/resume-builder"
+repository-code: "https://github.com/fnziad/ZeroTex"
+url: "https://github.com/fnziad/ZeroTex"
 keywords:
   - resume
   - cv
@@ -26,7 +26,7 @@ preferred-citation:
     - family-names: "Ziad"
       given-names: "Fahad Nadim"
       email: "f.n.ziad@gmail.com"
-  title: "Professional Resume Builder"
+  title: "ZeroTex"
   year: 2025
-  url: "https://github.com/fnziad/resume-builder"
-  notes: "A modern resume builder with LaTeX export capabilities"
+  url: "https://github.com/fnziad/ZeroTex"
+  notes: "A modern resume builder with LaTeX export capabilities."
