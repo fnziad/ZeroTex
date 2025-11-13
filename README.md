@@ -1,4 +1,4 @@
-![Node.js](https://img.shields.io/badge/node-%5E18.x-brightgreen?logo=node.js)
+![Next.js](https://img.shields.io/badge/next.js-%5E15.0.0-black?logo=next.js)
 ![React](https://img.shields.io/badge/react-%5E18.3.1-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/typescript-%5E5.x-3178C6?logo=typescript)
 ![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-blue)
