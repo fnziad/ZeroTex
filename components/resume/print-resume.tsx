@@ -32,22 +32,35 @@ export default function PrintResume({ data, onClose }: PrintResumeProps) {
   return (
     <div className="print-container">
       <style jsx global>{`
+
         @media print {
-          /* Hide everything except the resume */
-          body * {
-            visibility: hidden;
+          /* Force white background for all containers and dark mode classes */
+          html, body, #__next, .print-container, .print-resume,
+          [class*='dark'], [class*='Dark'], [class*='DARK'],
+          [data-theme='dark'], [data-theme='Dark'], [data-theme='DARK'] {
+            background: white !important;
+            box-shadow: none !important;
+            border: none !important;
+            color-scheme: light !important;
           }
-          
+          body * {
+            visibility: hidden !important;
+          }
           .print-container,
           .print-container * {
-            visibility: visible;
+            visibility: visible !important;
           }
-          
           .print-container {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            min-height: 100vh !important;
+          }
+          .print-resume {
+            box-shadow: none !important;
+            border: none !important;
+            background: white !important;
           }
 
           /* A4 page setup - Compact margins to match LaTeX */
