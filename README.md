@@ -1,61 +1,66 @@
 # ZeroTex
 
-ZeroTex is a modern, professional resume/CV builder that outputs pure LaTeX for perfect typesetting and PDF quality. Designed for job seekers, academics, and professionals who want beautiful, ATS-friendly resumes with zero coding required.
+> **ZeroTex** — Zero code, pure LaTeX. Professional resume builder for modern developers and academics.
+> 
+> *Built by Fahad Nadim Ziad — where code meets craftsmanship.*
 
 ---
 
-## Features
+## 🚀 Overview
 
-- **Zero Code, Pure LaTeX**: Instantly generate LaTeX resumes without writing a single line of code.
-- **Professional Templates**: Clean, minimal, and highly readable layouts.
-- **Live Preview**: See your resume update in real time as you edit.
-- **One-Click PDF Export**: Print or save as PDF with browser-native quality.
-- **ATS-Friendly**: Output is optimized for Applicant Tracking Systems.
-- **Custom Sections**: Add, remove, and reorder sections as needed.
-- **Dark/Light Mode**: Beautiful in any theme.
-- **Open Source**: Built with Next.js, React, Tailwind CSS, and TypeScript.
+ZeroTex is a next-generation resume/CV builder that outputs pure LaTeX for flawless typesetting and PDF quality. Designed for job seekers, researchers, and professionals who demand beautiful, ATS-friendly resumes with zero coding required.
+
+**Version:** v1 Prototype (actively developed)
 
 ---
 
-## Quick Start
+## ✨ Features
 
-1. **Clone the repo:**
-   ```sh
-   git clone https://github.com/fnziad/ZeroTex.git
-   cd ZeroTex
-   ```
-2. **Install dependencies:**
-   ```sh
-   pnpm install
-   # or
-   npm install
-   ```
-3. **Run the app locally:**
-   ```sh
-   pnpm dev
-   # or
-   npm run dev
-   ```
-4. **Open in browser:**
-   Visit [http://localhost:3000](http://localhost:3000)
+- **Zero Code, Pure LaTeX** — Instantly generate LaTeX resumes without writing a single line of code.
+- **Professional Templates** — Clean, minimal, and highly readable layouts.
+- **Live Preview** — See your resume update in real time as you edit.
+- **One-Click PDF Export** — Print or save as PDF with browser-native quality.
+- **ATS-Friendly** — Output is optimized for Applicant Tracking Systems.
+- **Custom Sections** — Add, remove, and reorder sections as needed.
+- **Dark/Light Mode** — Beautiful in any theme.
+- **Source-Available** — Built with Next.js, React, Tailwind CSS, and TypeScript.
 
 ---
 
-## Deployment
+## ⚡ Quick Start
+
+```sh
+# 1. Clone the repo
+git clone https://github.com/fnziad/ZeroTex.git
+cd ZeroTex
+
+# 2. Install dependencies
+pnpm install  # or npm install
+
+# 3. Run the app locally
+pnpm dev      # or npm run dev
+
+# 4. Open in browser
+# Visit http://localhost:3000
+```
+
+---
+
+## 🚢 Deployment
 
 ZeroTex is ready for deployment on Vercel, Netlify, or any platform that supports Next.js.
 
 - **Vercel:**
-  - Click "Deploy to Vercel" or connect your repo at https://vercel.com/import
+  - Click "Deploy to Vercel" or connect your repo at [vercel.com/import](https://vercel.com/import)
 - **Manual:**
   - Build: `pnpm build`
   - Start: `pnpm start`
 
 ---
 
-## License
+## 📄 License
 
-Copyright © 2025 Fahad Nadim Ziad (Ziad)
+Copyright © 2025 Fahad Nadim Ziad (fnziad)
 All Rights Reserved
 
 This software and associated documentation files (the "Software") are the proprietary property of Fahad Nadim Ziad. No part of this Software may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of the copyright holder, except in the case of brief quotations embodied in critical reviews and certain other noncommercial uses permitted by copyright law.
@@ -64,7 +69,7 @@ For permission requests, contact: f.n.ziad@gmail.com
 
 ---
 
-## Author
+## 👤 Author
 
 - **Fahad Nadim Ziad** ([fnziad](https://github.com/fnziad))
 - Email: f.n.ziad@gmail.com
@@ -72,24 +77,24 @@ For permission requests, contact: f.n.ziad@gmail.com
 
 ---
 
-## Security & Enforcement
+## 🛡️ Security & Enforcement
 
 - All builds are watermarked and cryptographically signed.
-- See `ENFORCEMENT.md` for legal protection and anti-plagiarism steps.
+- See [`ENFORCEMENT.md`](./ENFORCEMENT.md) for legal protection and anti-plagiarism steps.
 
 ---
 
-## Citation
+## 📚 Citation
 
 If you use ZeroTex in your research or work, please cite it as:
 
-```
+```text
 Fahad Nadim Ziad. ZeroTex: Professional Resume Builder. https://github.com/fnziad/ZeroTex
 ```
 
 ---
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
 - Built with Next.js, React, Tailwind CSS, TypeScript, and shadcn/ui.
 - Inspired by the LaTeX typesetting system and modern design best practices.
