@@ -1,16 +1,24 @@
 # ZeroTex
 
-> **ZeroTex** — Zero code, pure LaTeX. Professional resume builder for modern developers and academics.
+> **ZeroTex** — Zero code, pure LaTeX. Professional resume builder for modern developers, academics, and job seekers.
 > 
 > *Built by Fahad Nadim Ziad — where code meets craftsmanship.*
 
 ---
 
-## 🚀 Overview
+## 🚀 Live Demo
 
-ZeroTex is a next-generation resume/CV builder that outputs pure LaTeX for flawless typesetting and PDF quality. Designed for job seekers, researchers, and professionals who demand beautiful, ATS-friendly resumes with zero coding required.
+👉 [Try ZeroTex now!](https://zerotex.vercel.app/) — The app is live, fully functional, and ready for your next career move.
 
-**Version:** v1 Prototype (actively developed)
+---
+
+## 📝 Introduction
+
+ZeroTex is a next-generation resume/CV builder that outputs pure LaTeX for flawless typesetting and PDF quality. Designed for professionals, researchers, and students who demand beautiful, ATS-friendly resumes with zero coding required.
+
+- **Live and working:** ZeroTex is deployed and ready for use.
+- **v1 Prototype:** Actively developed, fully functional, and open to feedback.
+- **Source-Available:** Proprietary, with strong author ownership and protection.
 
 ---
 
@@ -23,38 +31,22 @@ ZeroTex is a next-generation resume/CV builder that outputs pure LaTeX for flawl
 - **ATS-Friendly** — Output is optimized for Applicant Tracking Systems.
 - **Custom Sections** — Add, remove, and reorder sections as needed.
 - **Dark/Light Mode** — Beautiful in any theme.
-- **Source-Available** — Built with Next.js, React, Tailwind CSS, and TypeScript.
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Quick Start (For Developers)
 
 ```sh
-# 1. Clone the repo
+# Clone the repo
 git clone https://github.com/fnziad/ZeroTex.git
 cd ZeroTex
 
-# 2. Install dependencies
+# Install dependencies
 pnpm install  # or npm install
 
-# 3. Run the app locally
+# Run locally
 pnpm dev      # or npm run dev
-
-# 4. Open in browser
-# Visit http://localhost:3000
 ```
-
----
-
-## 🚢 Deployment
-
-ZeroTex is ready for deployment on Vercel, Netlify, or any platform that supports Next.js.
-
-- **Vercel:**
-  - Click "Deploy to Vercel" or connect your repo at [vercel.com/import](https://vercel.com/import)
-- **Manual:**
-  - Build: `pnpm build`
-  - Start: `pnpm start`
 
 ---
 
