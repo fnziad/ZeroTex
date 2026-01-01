@@ -34,8 +34,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "add-copyrights": "node scripts/tools/add-copyrights.js",
-    "check-headers": "node scripts/tools/check-headers.js",
     "prepare": "husky install"
   },
   "dependencies": {

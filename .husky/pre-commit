@@ -5,10 +5,6 @@
 
 echo "🔍 Running pre-commit checks..."
 
-# Check copyright headers
-echo "📝 Checking copyright headers..."
-npm run check-headers || exit 1
-
 # Run detect-secrets if available
 if command -v detect-secrets &> /dev/null; then
   echo "🔐 Scanning for secrets..."
