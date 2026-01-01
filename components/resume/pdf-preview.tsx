@@ -25,19 +25,45 @@ export default function PDFPreview({ data }: PDFPreviewProps) {
       doc.setFontSize(18)
       doc.text(data.personal.fullName || "Resume", 105, 20, { align: "center" })
 
-      // Add contact information
+      // Add contact information with clickable links
       doc.setFontSize(10)
-      const contactInfo = [
-        `Email: ${data.personal.email || "N/A"}`,
-        `Phone: ${data.personal.phone || "N/A"}`,
-        `LinkedIn: ${data.personal.linkedin || "N/A"}`,
-        `GitHub: ${data.personal.github || "N/A"}`,
-      ].join(" | ")
-
-      doc.text(contactInfo, 105, 30, { align: "center" })
+      let contactY = 30
+      const contactParts: string[] = []
+      
+      if (data.personal.email) contactParts.push(`Email: ${data.personal.email}`)
+      if (data.personal.phone) contactParts.push(`Phone: ${data.personal.phone}`)
+      if (data.personal.location) contactParts.push(data.personal.location)
+      
+      if (contactParts.length > 0) {
+        doc.text(contactParts.join(" | "), 105, contactY, { align: "center" })
+        contactY += 6
+      }
+      
+      // Add profile links
+      const linkParts: string[] = []
+      if (data.personal.website) linkParts.push(`Website: ${data.personal.website}`)
+      if (data.personal.linkedin) linkParts.push(`LinkedIn: ${data.personal.linkedin}`)
+      if (data.personal.github) linkParts.push(`GitHub: ${data.personal.github}`)
+      
+      // Add custom links
+      if (data.personal.customLinks) {
+        const customLinks = data.personal.customLinks.split('\n').filter(l => l.trim())
+        customLinks.forEach(link => {
+          const match = link.match(/^([^:]+):\s*(.+)$/)
+          if (match) {
+            const [, label] = match
+            linkParts.push(label.trim())
+          }
+        })
+      }
+      
+      if (linkParts.length > 0) {
+        doc.text(linkParts.join(" | "), 105, contactY, { align: "center" })
+        contactY += 4
+      }
 
       // Add sections
-      let yPosition = 40
+      let yPosition = contactY + 6
 
       // Education section
       if (data.education.length > 0) {

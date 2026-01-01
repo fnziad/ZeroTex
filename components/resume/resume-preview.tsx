@@ -89,12 +89,11 @@ export default function ResumePreview({ data }: ResumePreviewProps) {
                     <span className="text-xs italic">{proj.date}</span>
                   </div>
                   {proj.technologies && <div className="text-xs italic">{proj.technologies}</div>}
-                  {proj.description && <p className="text-xs mt-0.5">{proj.description}</p>}
-                  {proj.link && <a href={proj.link} className="text-xs text-blue-600 underline">{proj.link}</a>}
-                  {proj.bullets && proj.bullets.length > 0 && (
+                  {proj.link && <a href={proj.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">{proj.link}</a>}
+                  {proj.description && Array.isArray(proj.description) && proj.description.length > 0 && (
                     <ul className="list-disc ml-4 text-xs space-y-0.5 mt-1">
-                      {proj.bullets.map((b: string, i: number) => (
-                        <li key={i} className="leading-snug text-justify">{b}</li>
+                      {proj.description.filter((d: string) => d && d.trim()).map((desc: string, i: number) => (
+                        <li key={i} className="leading-snug text-justify">{desc}</li>
                       ))}
                     </ul>
                   )}
@@ -251,13 +250,52 @@ export default function ResumePreview({ data }: ResumePreviewProps) {
           {data.personal.email && data.personal.phone && <span>|</span>}
           {data.personal.phone && <span>{data.personal.phone}</span>}
         </div>
-        {(data.personal.linkedin || data.personal.github || data.personal.website) && (
+        {(data.personal.linkedin || data.personal.github || data.personal.website || data.personal.customLinks) && (
           <div className="text-[10px] space-x-1.5 mt-0.5 leading-tight">
-            {data.personal.linkedin && <span>LinkedIn: {data.personal.linkedin}</span>}
+            {data.personal.website && (
+              <>
+                <a href={data.personal.website.startsWith('http') ? data.personal.website : `https://${data.personal.website}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  🌐 {data.personal.website}
+                </a>
+              </>
+            )}
+            {data.personal.website && data.personal.linkedin && <span>|</span>}
+            {data.personal.linkedin && (
+              <>
+                <a href={data.personal.linkedin.startsWith('http') ? data.personal.linkedin : `https://linkedin.com/in/${data.personal.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  💼 {data.personal.linkedin}
+                </a>
+              </>
+            )}
             {data.personal.linkedin && data.personal.github && <span>|</span>}
-            {data.personal.github && <span>GitHub: {data.personal.github}</span>}
-            {(data.personal.linkedin || data.personal.github) && data.personal.website && <span>|</span>}
-            {data.personal.website && <span>{data.personal.website}</span>}
+            {data.personal.github && (
+              <>
+                <a href={data.personal.github.startsWith('http') ? data.personal.github : `https://github.com/${data.personal.github}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  💻 {data.personal.github}
+                </a>
+              </>
+            )}
+            {data.personal.customLinks && (
+              <>
+                {(data.personal.linkedin || data.personal.github || data.personal.website) && <span>|</span>}
+                {data.personal.customLinks.split('\n').filter(l => l.trim()).map((link, idx) => {
+                  const match = link.match(/^([^:]+):\s*(.+)$/)
+                  if (match) {
+                    const [, label, url] = match
+                    const fullUrl = url.trim().startsWith('http') ? url.trim() : `https://${url.trim()}`
+                    return (
+                      <span key={idx}>
+                        {idx > 0 && <span className="mx-1.5">|</span>}
+                        <a href={fullUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                          🔗 {label.trim()}
+                        </a>
+                      </span>
+                    )
+                  }
+                  return null
+                })}
+              </>
+            )}
           </div>
         )}
       </div>
