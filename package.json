@@ -33,7 +33,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -64,12 +64,14 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.22",
-    "eslint": "^8",
-    "eslint-config-next": "^15.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
     "husky": "^9.1.7",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.18",
