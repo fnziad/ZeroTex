@@ -117,6 +117,19 @@ function generatePersonalInfo(personal: any): string {
     line2.push(`\\href{${url}}{\\faIcon[brands]{github}\\, ${escapeLatex(personal.github)}}`)
   }
   
+  // Custom links (e.g., LeetCode, portfolio, etc.)
+  if (personal.customLinks) {
+    const links = personal.customLinks.split('\n').filter((l: string) => l.trim())
+    links.forEach((link: string) => {
+      const match = link.match(/^([^:]+):\s*(.+)$/)
+      if (match) {
+        const [, label, url] = match
+        const fullUrl = url.trim().startsWith('http') ? url.trim() : `https://${url.trim()}`
+        line2.push(`\\href{${fullUrl}}{\\faIcon{link}\\, ${escapeLatex(label.trim())}}`)
+      }
+    })
+  }
+  
   let result = ""
   if (line1.length > 0) result += line1.join(" \\textbullet{} ")
   if (line2.length > 0) {
@@ -259,12 +272,17 @@ function generateResearchExperience(data: any[]): string {
       content += `\\textit{${escapeLatex(exp.course)}}\n`
     }
     
-    if (exp.bullets && exp.bullets.length > 0) {
-      content += "\\begin{project}\n"
-      exp.bullets.forEach((bullet: string) => {
-        content += `    \\item ${escapeLatex(bullet)}\n`
-      })
-      content += "\\end{project}\n\\vspace{2mm}\n\n"
+    if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > 0) {
+      const validBullets = exp.bullets.filter((b: string) => b && b.trim())
+      if (validBullets.length > 0) {
+        content += "\\begin{project}\n"
+        validBullets.forEach((bullet: string) => {
+          content += `    \\item ${escapeLatex(bullet)}\n`
+        })
+        content += "\\end{project}\n\\vspace{2mm}\n\n"
+      } else {
+        content += "\\vspace{2mm}\n\n"
+      }
     } else {
       content += "\\vspace{2mm}\n\n"
     }
@@ -298,12 +316,17 @@ function generateExperience(data: any[]): string {
       content += "\n"
     }
     
-    if (exp.bullets && exp.bullets.length > 0) {
-      content += "\\begin{project}\n"
-      exp.bullets.forEach((bullet: string) => {
-        content += `    \\item ${escapeLatex(bullet)}\n`
-      })
-      content += "\\end{project}\n\\vspace{2mm}\n\n"
+    if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > 0) {
+      const validBullets = exp.bullets.filter((b: string) => b && b.trim())
+      if (validBullets.length > 0) {
+        content += "\\begin{project}\n"
+        validBullets.forEach((bullet: string) => {
+          content += `    \\item ${escapeLatex(bullet)}\n`
+        })
+        content += "\\end{project}\n\\vspace{2mm}\n\n"
+      } else {
+        content += "\\vspace{2mm}\n\n"
+      }
     } else {
       content += "\\vspace{2mm}\n\n"
     }
@@ -381,16 +404,20 @@ function generateProjects(data: any[]): string {
       content += `\\href{${proj.link}}{${escapeLatex(proj.link)}}\n`
     }
     
-    if (proj.description) {
-      content += `${escapeLatex(proj.description)}\n`
-    }
-    
-    if (proj.bullets && proj.bullets.length > 0) {
-      content += "\\begin{project}\n"
-      proj.bullets.forEach((bullet: string) => {
-        content += `    \\item ${escapeLatex(bullet)}\n`
-      })
-      content += "\\end{project}\n\\vspace{2mm}\n\n"
+    // Handle description - can be string array or single string
+    if (proj.description && Array.isArray(proj.description) && proj.description.length > 0) {
+      const validDesc = proj.description.filter((d: string) => d && d.trim())
+      if (validDesc.length > 0) {
+        content += "\\begin{project}\n"
+        validDesc.forEach((bullet: string) => {
+          content += `    \\item ${escapeLatex(bullet)}\n`
+        })
+        content += "\\end{project}\n\\vspace{2mm}\n\n"
+      } else {
+        content += "\\vspace{2mm}\n\n"
+      }
+    } else if (proj.description && typeof proj.description === 'string') {
+      content += `${escapeLatex(proj.description)}\n\\vspace{2mm}\n\n`
     } else {
       content += "\\vspace{2mm}\n\n"
     }

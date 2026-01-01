@@ -6,6 +6,7 @@ export interface PersonalInfo {
   linkedin: string
   github: string
   website: string
+  customLinks: string  // For LeetCode, portfolio, or other profile links (one per line)
 }
 
 export type SectionType =
@@ -99,6 +100,7 @@ export const defaultResumeData: ResumeData = {
     linkedin: "",
     github: "",
     website: "",
+    customLinks: "",
   },
   sections: [
     {

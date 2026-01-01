@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import type { PersonalInfo } from "@/lib/resume-types"
 
 interface PersonalInfoFormProps {
@@ -96,6 +97,18 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
             value={formData.website}
             onChange={handleChange}
             placeholder="leviackerman.dev"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="customLinks">Other Profile Links (Optional)</Label>
+          <Textarea
+            id="customLinks"
+            name="customLinks"
+            value={formData.customLinks}
+            onChange={handleChange as any}
+            placeholder="LeetCode: leetcode.com/captainlevi&#10;Portfolio: portfolio.com/levi&#10;(One link per line, format: Label: URL)"
+            rows={3}
           />
         </div>
       </div>
