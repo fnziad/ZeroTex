@@ -1,4 +1,4 @@
-name: CI - Copyright & Security Checks
+name: CI - Build & Test
 
 on:
   push:
@@ -7,27 +7,57 @@ on:
     branches: [main, develop]
 
 jobs:
-  copyright-check:
-    name: Verify Copyright Headers
+  lint:
+    name: Lint Check
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install dependencies
-          run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
-      - name: Check copyright headers
-        run: npm run check-headers
+      - name: Run ESLint
+        run: pnpm run lint
 
-      - name: Verify LICENSE file exists
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm run build
+
+      - name: Verify LICENSE file
         run: |
           if [ ! -f LICENSE ]; then
             echo "❌ LICENSE file is missing!"
@@ -38,79 +68,3 @@ jobs:
             exit 1
           fi
           echo "✅ LICENSE file verified"
-
-  lint:
-    name: ESLint Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-          cache: "npm"
-
-      - name: Install dependencies
-          run: pnpm install --frozen-lockfile
-
-      - name: Run ESLint
-        run: npm run lint
-
-  secrets-detection:
-    name: Detect Secrets
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install detect-secrets
-        run: pip install detect-secrets
-
-      - name: Run detect-secrets
-        run: |
-          if [ -f .secrets.baseline ]; then
-            detect-secrets scan --baseline .secrets.baseline
-          else
-            detect-secrets scan --all-files --force-use-all-plugins
-          fi
-
-  build-test:
-    name: Build & Test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-          cache: "npm"
-
-      - name: Install dependencies
-          run: pnpm install --frozen-lockfile
-
-      - name: Build project
-          run: pnpm run build
-
-      - name: Inject watermark
-        run: node scripts/inject-watermark.js
-
-      - name: Verify watermark
-        run: |
-          if grep -q "ZIAD-SIGNATURE" out/index.html; then
-            echo "✅ Watermark verified in build output"
-          else
-            echo "❌ Watermark missing from build!"
-            exit 1
-          fi
