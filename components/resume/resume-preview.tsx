@@ -111,7 +111,7 @@ export default function ResumePreview({ data }: ResumePreviewProps) {
               {sectionData.map((pub: any, idx: number) => (
                 <div key={idx} className="leading-relaxed">
                   [{idx + 1}] {pub.authors && <span>{pub.authors}. </span>}
-                  {pub.title && <span className="italic">"{pub.title}." </span>}
+                  {pub.title && <span className="italic">&ldquo;{pub.title}.&rdquo; </span>}
                   {pub.venue && <span>{pub.venue}, </span>}
                   {pub.year && <span>{pub.year}. </span>}
                   {pub.doi && <span className="text-xs">DOI: {pub.doi}</span>}

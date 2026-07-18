@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import LatexCodeDisplay from "@/components/resume/latex-code-display"
@@ -12,17 +12,18 @@ import { ExternalLink } from "lucide-react"
 
 export default function LatexPage() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null)
-  const [latex, setLatex] = useState<string>("")
   const { toast } = useToast()
+  const latex = resumeData ? generateLatex(resumeData) : ""
 
   useEffect(() => {
+    let loadTimer: ReturnType<typeof setTimeout> | undefined
+
     // Try to load resume data from localStorage
     try {
       const savedData = localStorage.getItem("resumeData")
       if (savedData) {
-        const parsedData = JSON.parse(savedData)
-        setResumeData(parsedData)
-        setLatex(generateLatex(parsedData))
+        const parsedData = JSON.parse(savedData) as ResumeData
+        loadTimer = setTimeout(() => setResumeData(parsedData), 0)
       } else {
         toast({
           title: "No Resume Data Found",
@@ -37,6 +38,10 @@ export default function LatexPage() {
         description: "There was an error loading your resume data.",
         variant: "destructive",
       })
+    }
+
+    return () => {
+      if (loadTimer) clearTimeout(loadTimer)
     }
   }, [toast])
 

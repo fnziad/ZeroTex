@@ -330,7 +330,7 @@ export default function BuilderPage() {
       default:
         return (
           <div className="text-center py-8 text-muted-foreground">
-            <p>Form for "{selectedSection.type}" is not yet implemented.</p>
+            <p>Form for &ldquo;{selectedSection.type}&rdquo; is not yet implemented.</p>
           </div>
         )
     }

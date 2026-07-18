@@ -146,7 +146,7 @@ export default function CustomSectionForm({ data, updateData }: CustomSectionFor
       <div>
         <h3 className="text-lg font-semibold mb-2">Custom Section Format</h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Choose how you want to structure this section's content
+          Choose how you want to structure this section&apos;s content
         </p>
 
         <RadioGroup value={format} onValueChange={handleFormatChange} className="space-y-3">

@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
@@ -9,8 +8,6 @@ import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { usePathname } from "next/navigation"
 import { Analytics } from "@vercel/analytics/next"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({
   children,
@@ -29,7 +26,7 @@ export default function RootLayout({
         <meta name="keywords" content="zerotex, resume builder, cv maker, latex resume, no code, ats friendly, professional resume, cv builder" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </head>
-      <body className={inter.className}>
+      <body className="font-sans">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {isBuilderPage ? (
             // Builder page - no header/footer, full screen

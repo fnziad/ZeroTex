@@ -4,16 +4,13 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
+
+const subscribeToClient = () => () => undefined
 
 export function ModeToggle() {
   const { setTheme, theme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  // Handle hydration mismatch by only rendering when component is mounted
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const mounted = useSyncExternalStore(subscribeToClient, () => true, () => false)
 
   if (!mounted) {
     return (

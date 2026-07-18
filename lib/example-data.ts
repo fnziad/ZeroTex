@@ -11,6 +11,7 @@ export const exampleResumeData: ResumeData = {
     linkedin: "linkedin.com/in/levi-ackerman",
     github: "github.com/humanity-strongest",
     website: "leviackerman.dev",
+    customLinks: "",
   },
   sections: [
     {
@@ -125,9 +126,10 @@ export const exampleResumeData: ResumeData = {
       data: [
         {
           name: "Operation Reclaim Wall Maria",
-          dates: "857",
+          date: "857",
+          link: "",
           technologies: "Strategic Planning, Multi-Unit Coordination, Risk Mitigation",
-          bullets: [
+          description: [
             "Led critical squad operations during large-scale military campaign to reclaim territory",
             "Executed high-precision maneuvers that neutralized multiple high-value targets",
             "Coordinated with intelligence units to optimize tactical approaches in real-time",
@@ -135,9 +137,10 @@ export const exampleResumeData: ResumeData = {
         },
         {
           name: "Underground Rescue Initiative",
-          dates: "850",
+          date: "850",
+          link: "",
           technologies: "Urban Combat, Search & Rescue, Crisis Response",
-          bullets: [
+          description: [
             "Spearheaded rescue operations in complex underground environments with 100% success rate",
             "Developed innovative navigation techniques for low-visibility, high-risk scenarios",
             "Trained 50+ personnel in specialized urban combat and rescue protocols",

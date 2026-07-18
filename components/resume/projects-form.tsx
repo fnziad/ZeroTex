@@ -21,8 +21,8 @@ export default function ProjectsForm({ data, updateData }: ProjectsFormProps) {
     const newProject: Project = {
       name: "",
       technologies: "",
-      startDate: "",
-      endDate: "",
+      date: "",
+      link: "",
       description: ["", "", ""],
     }
     const updatedProjects = [...projects, newProject]
@@ -109,22 +109,22 @@ export default function ProjectsForm({ data, updateData }: ProjectsFormProps) {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label htmlFor={`startDate-${projIndex}`}>Start Date</Label>
+                <Label htmlFor={`date-${projIndex}`}>Date</Label>
                 <Input
-                  id={`startDate-${projIndex}`}
-                  value={project.startDate}
-                  onChange={(e) => handleChange(projIndex, "startDate", e.target.value)}
-                  placeholder="Month Year"
+                  id={`date-${projIndex}`}
+                  value={project.date}
+                  onChange={(e) => handleChange(projIndex, "date", e.target.value)}
+                  placeholder="2025 or Jan 2024 – Present"
                 />
               </div>
 
               <div>
-                <Label htmlFor={`endDate-${projIndex}`}>End Date</Label>
+                <Label htmlFor={`link-${projIndex}`}>Project Link</Label>
                 <Input
-                  id={`endDate-${projIndex}`}
-                  value={project.endDate}
-                  onChange={(e) => handleChange(projIndex, "endDate", e.target.value)}
-                  placeholder="Month Year or Present"
+                  id={`link-${projIndex}`}
+                  value={project.link}
+                  onChange={(e) => handleChange(projIndex, "link", e.target.value)}
+                  placeholder="https://example.com/project"
                 />
               </div>
             </div>

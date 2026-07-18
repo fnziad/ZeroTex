@@ -54,7 +54,7 @@ export default function AwardsForm({ data, updateData }: AwardsFormProps) {
       </div>
 
       <p className="text-sm text-muted-foreground">
-        Organize your awards and honors into categories (e.g., "Academic Scholarships", "Competition Awards").
+        Organize your awards and honors into categories (e.g., &ldquo;Academic Scholarships&rdquo;, &ldquo;Competition Awards&rdquo;).
       </p>
 
       <div className="space-y-3">
