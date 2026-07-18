@@ -1,8 +1,6 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import type { ChangeEvent } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -14,13 +12,9 @@ interface PersonalInfoFormProps {
 }
 
 export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormProps) {
-  const [formData, setFormData] = useState<PersonalInfo>(data)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    const updatedData = { ...formData, [name]: value }
-    setFormData(updatedData)
-    updateData(updatedData)
+    updateData({ ...data, [name]: value })
   }
 
   return (
@@ -33,7 +27,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           <Input
             id="fullName"
             name="fullName"
-            value={formData.fullName}
+            value={data.fullName}
             onChange={handleChange}
             placeholder="Levi Ackerman"
           />
@@ -44,7 +38,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           <Input
             id="location"
             name="location"
-            value={formData.location}
+            value={data.location}
             onChange={handleChange}
             placeholder="Wall Maria, Paradis Island"
           />
@@ -52,7 +46,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
 
         <div>
           <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="+123 456 7890" />
+          <Input id="phone" name="phone" value={data.phone} onChange={handleChange} placeholder="+123 456 7890" />
         </div>
 
         <div>
@@ -61,7 +55,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
             id="email"
             name="email"
             type="email"
-            value={formData.email}
+            value={data.email}
             onChange={handleChange}
             placeholder="levi.ackerman@scoutregiment.com"
           />
@@ -72,7 +66,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           <Input
             id="linkedin"
             name="linkedin"
-            value={formData.linkedin}
+            value={data.linkedin}
             onChange={handleChange}
             placeholder="linkedin.com/in/levi-ackerman"
           />
@@ -83,7 +77,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           <Input
             id="github"
             name="github"
-            value={formData.github}
+            value={data.github}
             onChange={handleChange}
             placeholder="github.com/captainlevi"
           />
@@ -94,7 +88,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           <Input
             id="website"
             name="website"
-            value={formData.website}
+            value={data.website}
             onChange={handleChange}
             placeholder="leviackerman.dev"
           />
@@ -105,8 +99,8 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           <Textarea
             id="customLinks"
             name="customLinks"
-            value={formData.customLinks}
-            onChange={handleChange as any}
+            value={data.customLinks}
+            onChange={handleChange}
             placeholder="LeetCode: leetcode.com/captainlevi&#10;Portfolio: portfolio.com/levi&#10;(One link per line, format: Label: URL)"
             rows={3}
           />

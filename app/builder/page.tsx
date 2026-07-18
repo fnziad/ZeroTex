@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Loader2, Download, FileText, ExternalLink, Printer } from "lucide-react"
+import { FileText, ExternalLink, Printer } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { motion } from "framer-motion"
 import PersonalInfoForm from "@/components/resume/personal-info-form"
@@ -21,11 +21,17 @@ import CertificationsForm from "@/components/resume/certifications-form"
 import PublicationsForm from "@/components/resume/publications-form"
 import ExecutiveSummaryForm from "@/components/resume/executive-summary-form"
 import SectionManager from "@/components/resume/section-manager"
-import ResumePreview from "@/components/resume/resume-preview"
 import MultiPagePreview from "@/components/resume/multi-page-preview"
 import PrintResume from "@/components/resume/print-resume"
+import { ResumeDataActions } from "@/components/resume/resume-data-actions"
 import { generateLatex } from "@/lib/latex-generator"
-import { generateBrowserPDF } from "@/lib/browser-pdf-generator"
+import {
+  LEGACY_RESUME_STORAGE_KEY,
+  RESUME_RECOVERY_STORAGE_KEY,
+  RESUME_STORAGE_KEY,
+  parseResumeDocument,
+  serializeResumeDocument,
+} from "@/lib/resume-document"
 import { type ResumeData, type ResumeSection, type SectionType, defaultResumeData } from "@/lib/resume-types"
 import { exampleResumeData } from "@/lib/example-data"
 import { ZeroTexIcon } from "@/components/zerotex-logo"
@@ -33,32 +39,69 @@ import { ZeroTexIcon } from "@/components/zerotex-logo"
 export default function BuilderPage() {
   const [resumeData, setResumeData] = useState<ResumeData>(defaultResumeData)
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null)
-  const [isGenerating, setIsGenerating] = useState(false)
   const [isGeneratingLatex, setIsGeneratingLatex] = useState(false)
   const [showPrintView, setShowPrintView] = useState(false)
+  const [isStorageReady, setIsStorageReady] = useState(false)
   const { toast } = useToast()
 
-  // Load saved data from localStorage if available
+  // Hydrate once before enabling autosave so defaults cannot overwrite stored data.
   useEffect(() => {
-    const savedData = localStorage.getItem("resumeData")
-    if (savedData) {
+    const currentDocument = localStorage.getItem(RESUME_STORAGE_KEY)
+    const legacyDocument = localStorage.getItem(LEGACY_RESUME_STORAGE_KEY)
+    const savedDocument = currentDocument ?? legacyDocument
+    let canEnableAutosave = true
+
+    if (savedDocument) {
       try {
-        const parsed = JSON.parse(savedData)
-        setResumeData(parsed)
+        const parsed = parseResumeDocument(savedDocument)
+        setResumeData(parsed.data)
+
+        if (legacyDocument || parsed.migratedFromLegacy) {
+          localStorage.setItem(RESUME_STORAGE_KEY, serializeResumeDocument(parsed.data))
+          localStorage.removeItem(LEGACY_RESUME_STORAGE_KEY)
+        }
+
         toast({
-          title: "Resume Data Loaded",
-          description: "Your previously saved resume data has been loaded.",
+          title: parsed.migratedFromLegacy ? "Resume data upgraded" : "Resume data loaded",
+          description: parsed.migratedFromLegacy
+            ? "Your saved resume was migrated to the current format."
+            : "Your locally saved resume has been restored.",
         })
       } catch (error) {
         console.error("Error parsing saved data:", error)
+        try {
+          localStorage.setItem(RESUME_RECOVERY_STORAGE_KEY, savedDocument)
+        } catch (recoveryError) {
+          console.error("Error preserving invalid resume data:", recoveryError)
+          canEnableAutosave = false
+        }
+        toast({
+          title: "Saved resume could not be loaded",
+          description: `${
+            error instanceof Error ? error.message : "The saved data is invalid."
+          } ${
+            canEnableAutosave
+              ? "A recovery copy was preserved locally."
+              : "Autosave was disabled to avoid overwriting it."
+          }`,
+          variant: "destructive",
+        })
       }
     }
+
+    setIsStorageReady(canEnableAutosave)
   }, [toast])
 
-  // Save data to localStorage whenever it changes
+  // Persist a versioned document only after hydration has completed.
   useEffect(() => {
-    localStorage.setItem("resumeData", JSON.stringify(resumeData))
-  }, [resumeData])
+    if (!isStorageReady) return
+
+    try {
+      localStorage.setItem(RESUME_STORAGE_KEY, serializeResumeDocument(resumeData))
+    } catch (error) {
+      console.error("Error saving resume data:", error)
+    }
+  }, [isStorageReady, resumeData])
 
   // Update personal info
   const updatePersonalInfo = (data: any) => {
@@ -139,31 +182,6 @@ export default function BuilderPage() {
       title: "Opening Print Dialog",
       description: "Use 'Save as PDF' in the print dialog to download your resume.",
     })
-  }
-
-  const handleLegacyPDF = async () => {
-    // Fallback jsPDF method (lower quality)
-    setIsGenerating(true)
-
-    try {
-      console.log("Starting PDF generation with data:", resumeData)
-      await generateBrowserPDF(resumeData, "classic")
-
-      toast({
-        title: "PDF Generated Successfully",
-        description: "Your resume PDF has been generated and downloaded.",
-      })
-    } catch (error) {
-      console.error("Error generating PDF:", error)
-      console.error("Error details:", error instanceof Error ? error.message : String(error))
-      toast({
-        title: "Error Generating PDF",
-        description: error instanceof Error ? error.message : "There was an error generating your PDF. Please try again.",
-        variant: "destructive",
-      })
-    } finally {
-      setIsGenerating(false)
-    }
   }
 
   const handleGenerateLatex = () => {
@@ -278,6 +296,11 @@ export default function BuilderPage() {
     }
   }
 
+  const handleImportResume = (data: ResumeData) => {
+    setResumeData(data)
+    setSelectedSectionId(null)
+  }
+
   // Get the selected section
   const selectedSection = selectedSectionId
     ? resumeData.sections.find((s) => s.id === selectedSectionId)
@@ -295,6 +318,7 @@ export default function BuilderPage() {
     }
 
     const commonProps = {
+      key: selectedSection.id,
       data: selectedSection.data,
       updateData: (data: any) => updateSectionData(selectedSection.id, data),
     }
@@ -348,12 +372,13 @@ export default function BuilderPage() {
           className="space-y-3"
         >
           {/* Header with logo and actions */}
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <div className="flex items-start justify-between gap-2 mb-2">
+            <Link href="/" className="flex shrink-0 items-center gap-2 hover:opacity-80 transition-opacity">
               <ZeroTexIcon size={28} />
               <span className="text-sm font-semibold">ZeroTex</span>
             </Link>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <ResumeDataActions data={resumeData} onImport={handleImportResume} />
               <Button 
                 onClick={handleLoadExample} 
                 size="sm" 
@@ -376,7 +401,7 @@ export default function BuilderPage() {
                 onClick={handleGenerateLatex} 
                 size="sm" 
                 variant="outline"
-                disabled={isGenerating}
+                disabled={isGeneratingLatex}
                 className="text-xs"
               >
                 <FileText className="mr-1 h-3 w-3" />

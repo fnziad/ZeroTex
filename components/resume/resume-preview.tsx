@@ -6,6 +6,20 @@ interface ResumePreviewProps {
   data: ResumeData
 }
 
+function safeExternalUrl(value: unknown): string | null {
+  if (typeof value !== "string" || value.trim() === "") return null
+
+  try {
+    const candidate = /^https?:\/\//i.test(value.trim())
+      ? value.trim()
+      : `https://${value.trim()}`
+    const url = new URL(candidate)
+    return url.protocol === "http:" || url.protocol === "https:" ? url.toString() : null
+  } catch {
+    return null
+  }
+}
+
 export default function ResumePreview({ data }: ResumePreviewProps) {
   const renderSection = (section: ResumeSection) => {
     if (!section.visible) return null
@@ -82,14 +96,16 @@ export default function ResumePreview({ data }: ResumePreviewProps) {
           <div key={section.id} className="mb-2">
             <h2 className="text-sm font-bold border-b border-gray-800 mb-1.5 uppercase tracking-wide">{section.title}</h2>
             <div className="space-y-1.5 text-xs">
-              {sectionData.map((proj: any, idx: number) => (
+              {sectionData.map((proj: any, idx: number) => {
+                const projectUrl = safeExternalUrl(proj.link)
+                return (
                 <div key={idx}>
                   <div className="flex justify-between items-baseline">
                     <strong className="text-sm">{proj.name}</strong>
                     <span className="text-xs italic">{proj.date}</span>
                   </div>
                   {proj.technologies && <div className="text-xs italic">{proj.technologies}</div>}
-                  {proj.link && <a href={proj.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">{proj.link}</a>}
+                  {projectUrl && <a href={projectUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">{proj.link}</a>}
                   {proj.description && Array.isArray(proj.description) && proj.description.length > 0 && (
                     <ul className="list-disc ml-4 text-xs space-y-0.5 mt-1">
                       {proj.description.filter((d: string) => d && d.trim()).map((desc: string, i: number) => (
@@ -98,7 +114,8 @@ export default function ResumePreview({ data }: ResumePreviewProps) {
                     </ul>
                   )}
                 </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         )
@@ -138,6 +155,7 @@ export default function ResumePreview({ data }: ResumePreviewProps) {
                   )
                 }
                 // Handle object format
+                const certificateUrl = safeExternalUrl(cert.link)
                 return (
                   <div key={idx}>
                     <div className="flex justify-between items-baseline">
@@ -146,7 +164,7 @@ export default function ResumePreview({ data }: ResumePreviewProps) {
                     </div>
                     {cert.issuer && <div className="text-xs">{cert.issuer}</div>}
                     {cert.credentialId && <div className="text-xs">ID: {cert.credentialId}</div>}
-                    {cert.link && <a href={cert.link} className="text-xs text-blue-600 underline">View Certificate</a>}
+                    {certificateUrl && <a href={certificateUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 underline">View Certificate</a>}
                   </div>
                 )
               })}
