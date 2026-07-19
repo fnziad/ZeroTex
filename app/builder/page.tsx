@@ -4,9 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { FileText, ExternalLink, Printer } from "lucide-react"
+import { CheckCircle2, ExternalLink, FileText, Printer } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { motion } from "framer-motion"
 import PersonalInfoForm from "@/components/resume/personal-info-form"
 import EducationForm from "@/components/resume/education-form"
 import ResearchInterestsForm from "@/components/resume/research-interests-form"
@@ -361,129 +360,123 @@ export default function BuilderPage() {
   }
 
   return (
-    <div className="h-screen flex overflow-hidden">
-      {/* Left side - Scrollable workspace */}
-      <div className="flex-1 overflow-y-auto bg-background">
-        <div className="max-w-4xl mx-auto p-4">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="space-y-3"
-        >
-          {/* Header with logo and actions */}
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <Link href="/" className="flex shrink-0 items-center gap-2 hover:opacity-80 transition-opacity">
-              <ZeroTexIcon size={28} />
-              <span className="text-sm font-semibold">ZeroTex</span>
+    <div className="flex h-screen overflow-hidden bg-muted/30">
+      <section className="flex min-w-0 flex-1 flex-col bg-background lg:w-1/2" aria-label="Resume editor">
+        <header className="shrink-0 border-b bg-background/95 backdrop-blur-xl">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-5">
+            <Link href="/" className="group flex shrink-0 items-center gap-2.5" aria-label="Return to ZeroTeX home">
+              <span className="flex size-8 items-center justify-center rounded-lg border bg-muted/40 transition-colors group-hover:bg-muted">
+                <ZeroTexIcon size={20} />
+              </span>
+              <span>
+                <span className="block text-sm font-semibold tracking-[-0.02em]">ZeroTeX</span>
+                <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                  <CheckCircle2 className="size-2.5 text-emerald-500" aria-hidden="true" />
+                  {isStorageReady ? "Saved locally" : "Local draft"}
+                </span>
+              </span>
             </Link>
-            <div className="flex flex-wrap items-center justify-end gap-2">
+            <div className="flex flex-wrap items-center justify-end gap-1.5">
               <ResumeDataActions data={resumeData} onImport={handleImportResume} />
-              <Button 
-                onClick={handleLoadExample} 
-                size="sm" 
-                variant="secondary"
-                className="text-xs"
+              <Button
+                onClick={handleLoadExample}
+                size="sm"
+                variant="ghost"
+                className="h-8 rounded-md px-2.5 text-xs"
               >
-                <FileText className="mr-1 h-3 w-3" />
-                Load Example
+                <FileText className="size-3.5" aria-hidden="true" />
+                Example
               </Button>
-              <Button 
-                onClick={handleOpenInOverleaf} 
-                size="sm" 
+              <Button
+                onClick={handleOpenInOverleaf}
+                size="sm"
                 variant="outline"
-                className="text-xs"
+                className="h-8 rounded-md px-2.5 text-xs"
               >
-                <ExternalLink className="mr-1 h-3 w-3" />
+                <ExternalLink className="size-3.5" aria-hidden="true" />
                 Overleaf
               </Button>
-              <Button 
-                onClick={handleGenerateLatex} 
-                size="sm" 
+              <Button
+                onClick={handleGenerateLatex}
+                size="sm"
                 variant="outline"
                 disabled={isGeneratingLatex}
-                className="text-xs"
+                className="h-8 rounded-md px-2.5 font-mono text-xs"
               >
-                <FileText className="mr-1 h-3 w-3" />
+                <FileText className="size-3.5" aria-hidden="true" />
                 .tex
               </Button>
-              <Button 
-                onClick={handleGeneratePDF} 
+              <Button
+                onClick={handleGeneratePDF}
                 size="sm"
-                className="text-xs bg-blue-600 hover:bg-blue-700"
-                title="Print to PDF (Perfect Quality)"
+                className="h-8 rounded-md px-2.5 text-xs shadow-sm"
+                title="Print or save as PDF"
               >
-                <Printer className="mr-1 h-3 w-3" />
+                <Printer className="size-3.5" aria-hidden="true" />
                 PDF
               </Button>
             </div>
           </div>
+        </header>
 
-          {/* Personal Info - Always shown */}
-          <Card className="p-4">
-            <h2 className="text-base font-semibold mb-3">Personal Information</h2>
-            <PersonalInfoForm data={resumeData.personal} updateData={updatePersonalInfo} />
-          </Card>
-
-          {/* Section Manager */}
-          <Card className="p-4">
-            <h2 className="text-base font-semibold mb-3">Sections</h2>
-            <SectionManager
-              sections={resumeData.sections}
-              activeSection={selectedSectionId}
-              onSectionClick={setSelectedSectionId}
-              onAddSection={handleAddSection}
-              onRemoveSection={handleRemoveSection}
-              onToggleVisibility={handleToggleVisibility}
-              onReorder={handleReorder}
-            />
-          </Card>
-
-          {/* Selected Section Form */}
-          {selectedSection && (
-            <Card className="p-4">
-              <h2 className="text-base font-semibold mb-3">{selectedSection.title}</h2>
-              {renderForm()}
+        <div className="flex-1 overflow-y-auto bg-muted/25">
+          <div className="mx-auto max-w-3xl space-y-4 p-4 sm:p-6">
+            <Card className="rounded-2xl border-border/70 bg-card p-5 shadow-sm sm:p-6">
+              <div className="mb-5">
+                <p className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-primary">Profile</p>
+                <h1 className="mt-1.5 text-lg font-medium tracking-tight">Personal information</h1>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">The contact details shown at the top of your resume.</p>
+              </div>
+              <PersonalInfoForm data={resumeData.personal} updateData={updatePersonalInfo} />
             </Card>
-          )}
-        </motion.div>
-        </div>
-      </div>
 
-      {/* Right side - Scrollable preview (Overleaf style) */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="hidden lg:flex flex-col bg-gray-900"
-        style={{ width: "50%", height: "100vh" }}
-      >
-        {/* Minimal header */}
-        <div className="px-3 py-2 bg-gray-950 border-b border-gray-800">
-          <h2 className="text-xs font-medium text-gray-400">PDF Preview</h2>
+            <Card className="rounded-2xl border-border/70 bg-card p-5 shadow-sm sm:p-6">
+              <div className="mb-5">
+                <p className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-primary">Structure</p>
+                <h2 className="mt-1.5 text-lg font-medium tracking-tight">Resume sections</h2>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">Choose what to show and arrange the reading order.</p>
+              </div>
+              <SectionManager
+                sections={resumeData.sections}
+                activeSection={selectedSectionId}
+                onSectionClick={setSelectedSectionId}
+                onAddSection={handleAddSection}
+                onRemoveSection={handleRemoveSection}
+                onToggleVisibility={handleToggleVisibility}
+                onReorder={handleReorder}
+              />
+            </Card>
+
+            {selectedSection && (
+              <Card className="rounded-2xl border-border/70 bg-card p-5 shadow-sm sm:p-6">
+                <div className="mb-5">
+                  <p className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-primary">Editing</p>
+                  <h2 className="mt-1.5 text-lg font-medium tracking-tight">{selectedSection.title}</h2>
+                </div>
+                {renderForm()}
+              </Card>
+            )}
+          </div>
         </div>
-        
-        {/* Scrollable preview container - Overleaf style with real multi-page rendering */}
-        <div 
-          className="flex-1 overflow-y-auto overflow-x-hidden"
-          style={{ 
-            background: '#525659',
-            scrollbarWidth: 'thin',
-            scrollbarColor: '#4B5563 #1F2937'
-          }}
-        >
-          <div className="flex flex-col items-center gap-3 py-4 px-3">
+      </section>
+
+      <aside className="hidden min-w-0 flex-1 flex-col bg-[#2f3237] lg:flex" aria-label="Live PDF preview">
+        <div className="flex h-[57px] shrink-0 items-center justify-between border-b border-white/10 bg-[#17191d] px-4">
+          <div>
+            <h2 className="text-xs font-medium text-white/85">Live preview</h2>
+            <p className="mt-0.5 text-[10px] text-white/40">Updates as you edit</p>
+          </div>
+          <span className="rounded-md border border-white/10 bg-white/5 px-2 py-1 font-mono text-[10px] text-white/55">A4 · 100%</span>
+        </div>
+        <div className="flex-1 overflow-x-hidden overflow-y-auto" style={{ scrollbarWidth: "thin", scrollbarColor: "#5b6068 #2f3237" }}>
+          <div className="flex flex-col items-center gap-4 px-5 py-7">
             <MultiPagePreview data={resumeData} />
           </div>
         </div>
-      </motion.div>
+      </aside>
 
-      {/* Print View Modal */}
       {showPrintView && (
-        <PrintResume 
-          data={resumeData} 
-          onClose={() => setShowPrintView(false)} 
-        />
+        <PrintResume data={resumeData} onClose={() => setShowPrintView(false)} />
       )}
     </div>
   )

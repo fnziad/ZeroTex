@@ -18,9 +18,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Personal Information</h2>
-
+    <div className="space-y-3">
       <div className="grid gap-4">
         <div>
           <Label htmlFor="fullName">Full Name</Label>

@@ -1,22 +1,28 @@
 import Link from "next/link"
 import { Github } from "lucide-react"
+import { ZeroTexIcon } from "@/components/zerotex-logo"
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t bg-background py-6">
-      <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-        <p className="text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Resume Builder. All rights reserved.
-        </p>
-        <div className="flex items-center gap-4">
+    <footer className="border-t bg-background">
+      <div className="container flex max-w-6xl flex-col gap-5 px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2.5">
+          <ZeroTexIcon size={22} />
+          <div>
+            <p className="text-sm font-medium">ZeroTeX</p>
+            <p className="text-xs text-muted-foreground">Open-source LaTeX resume builder.</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-5 text-xs text-muted-foreground">
+          <span>© {new Date().getFullYear()} Fahad Nadim Ziad</span>
           <Link
-            href="https://github.com"
+            href="https://github.com/fnziad/zerotex"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
           >
-            <Github className="h-5 w-5" />
-            <span className="sr-only">GitHub</span>
+            <Github className="size-3.5" aria-hidden="true" />
+            GitHub
           </Link>
         </div>
       </div>

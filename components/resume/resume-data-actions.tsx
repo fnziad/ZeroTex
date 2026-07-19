@@ -95,8 +95,8 @@ export function ResumeDataActions({ data, onImport }: ResumeDataActionsProps) {
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline" className="text-xs">
-            <Database className="mr-1 h-3 w-3" />
+          <Button size="sm" variant="ghost" className="h-8 rounded-md px-2.5 text-xs">
+            <Database className="size-3.5" aria-hidden="true" />
             Data
           </Button>
         </DropdownMenuTrigger>
