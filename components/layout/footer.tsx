@@ -10,7 +10,7 @@ export default function Footer() {
           <ZeroTexIcon size={22} />
           <div>
             <p className="text-sm font-medium">ZeroTeX</p>
-            <p className="text-xs text-muted-foreground">Open-source LaTeX resume builder.</p>
+            <p className="text-xs text-muted-foreground">Source-available LaTeX resume builder.</p>
           </div>
         </div>
         <div className="flex items-center gap-5 text-xs text-muted-foreground">
