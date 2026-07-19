@@ -31,7 +31,7 @@ export default function PrintResume({ data, onClose }: PrintResumeProps) {
 
   return (
     <div className="print-container">
-      <style jsx global>{`
+      <style>{`
 
         @media print {
           /* Force white background for all containers and dark mode classes */

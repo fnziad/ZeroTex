@@ -12,11 +12,14 @@ export default function BrowserPDFPage() {
   const { toast } = useToast()
 
   useEffect(() => {
+    let loadTimer: ReturnType<typeof setTimeout> | undefined
+
     // Try to load resume data from localStorage
     try {
       const savedData = localStorage.getItem("resumeData")
       if (savedData) {
-        setResumeData(JSON.parse(savedData))
+        const parsedData = JSON.parse(savedData) as ResumeData
+        loadTimer = setTimeout(() => setResumeData(parsedData), 0)
       } else {
         toast({
           title: "No Resume Data Found",
@@ -31,6 +34,10 @@ export default function BrowserPDFPage() {
         description: "There was an error loading your resume data.",
         variant: "destructive",
       })
+    }
+
+    return () => {
+      if (loadTimer) clearTimeout(loadTimer)
     }
   }, [toast])
 

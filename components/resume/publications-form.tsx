@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlusCircle, Trash2 } from "lucide-react"
 import type { Publication } from "@/lib/resume-types"
@@ -20,10 +19,10 @@ export default function PublicationsForm({ data, updateData }: PublicationsFormP
   const handleAddPublication = () => {
     const newPublication: Publication = {
       title: "",
-      journal: "",
-      date: "",
       authors: "",
-      description: "",
+      venue: "",
+      year: "",
+      doi: "",
     }
     const updatedPublications = [...publications, newPublication]
     setPublications(updatedPublications)
@@ -75,22 +74,22 @@ export default function PublicationsForm({ data, updateData }: PublicationsFormP
             </div>
 
             <div>
-              <Label htmlFor={`journal-${index}`}>Journal/Conference</Label>
+              <Label htmlFor={`venue-${index}`}>Journal/Conference</Label>
               <Input
-                id={`journal-${index}`}
-                value={publication.journal}
-                onChange={(e) => handleChange(index, "journal", e.target.value)}
+                id={`venue-${index}`}
+                value={publication.venue}
+                onChange={(e) => handleChange(index, "venue", e.target.value)}
                 placeholder="Journal of Computer Science"
               />
             </div>
 
             <div>
-              <Label htmlFor={`date-${index}`}>Publication Date</Label>
+              <Label htmlFor={`year-${index}`}>Publication Year</Label>
               <Input
-                id={`date-${index}`}
-                value={publication.date}
-                onChange={(e) => handleChange(index, "date", e.target.value)}
-                placeholder="Month Year"
+                id={`year-${index}`}
+                value={publication.year}
+                onChange={(e) => handleChange(index, "year", e.target.value)}
+                placeholder="2025"
               />
             </div>
 
@@ -105,13 +104,12 @@ export default function PublicationsForm({ data, updateData }: PublicationsFormP
             </div>
 
             <div>
-              <Label htmlFor={`description-${index}`}>Description</Label>
-              <Textarea
-                id={`description-${index}`}
-                value={publication.description}
-                onChange={(e) => handleChange(index, "description", e.target.value)}
-                placeholder="Brief description of the publication and its significance"
-                rows={3}
+              <Label htmlFor={`doi-${index}`}>DOI</Label>
+              <Input
+                id={`doi-${index}`}
+                value={publication.doi}
+                onChange={(e) => handleChange(index, "doi", e.target.value)}
+                placeholder="10.1000/example"
               />
             </div>
           </CardContent>

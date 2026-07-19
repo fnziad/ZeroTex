@@ -543,9 +543,8 @@ function renderProjects(
     doc.setFont("times", "bold")
     doc.text(project.name || "", margin, yPosition)
     
-    if (project.startDate || project.endDate) {
-      const dateText = `${project.startDate || ""} - ${project.endDate || ""}`
-      doc.text(dateText, pageWidth - margin, yPosition, { align: "right" })
+    if (project.date) {
+      doc.text(project.date, pageWidth - margin, yPosition, { align: "right" })
     }
     yPosition += 5
 
@@ -559,9 +558,9 @@ function renderProjects(
     }
 
     // Description bullets
-    if (project.bullets && Array.isArray(project.bullets)) {
+    if (project.description && Array.isArray(project.description)) {
       doc.setFont("times", "normal")
-      for (const bullet of project.bullets) {
+      for (const bullet of project.description) {
         yPosition = checkPageBreak(doc, yPosition, 8, margin)
         doc.circle(margin + 2, yPosition - 1.5, 0.7, "F")
         const lines = doc.splitTextToSize(bullet, contentWidth - 5)
@@ -602,8 +601,8 @@ function renderPublications(
     // Authors and date
     doc.setFont("times", "italic")
     let authorsText = pub.authors || ""
-    if (pub.date) {
-      authorsText += ` (${pub.date})`
+    if (pub.year) {
+      authorsText += ` (${pub.year})`
     }
     const authorLines = doc.splitTextToSize(authorsText, contentWidth)
     doc.text(authorLines, margin, yPosition)

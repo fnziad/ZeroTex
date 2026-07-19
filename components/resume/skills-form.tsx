@@ -53,7 +53,7 @@ export default function SkillsForm({ data, updateData }: SkillsFormProps) {
       </div>
 
       <p className="text-sm text-muted-foreground">
-        Organize your skills into categories. Each category should have a name (e.g., "Languages") and comma-separated
+        Organize your skills into categories. Each category should have a name (e.g., &ldquo;Languages&rdquo;) and comma-separated
         items.
       </p>
 

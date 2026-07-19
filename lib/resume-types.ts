@@ -64,6 +64,22 @@ export interface Experience {
   bullets: string[]
 }
 
+export interface Project {
+  name: string
+  technologies: string
+  date: string
+  link: string
+  description: string[]
+}
+
+export interface Publication {
+  title: string
+  authors: string
+  venue: string
+  year: string
+  doi: string
+}
+
 export interface SkillCategory {
   name: string
   items: string

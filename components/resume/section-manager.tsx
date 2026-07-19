@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { GripVertical, Eye, EyeOff, Trash2, Plus } from "lucide-react"
 import { ResumeSection, SectionType } from "@/lib/resume-types"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -112,14 +112,11 @@ export default function SectionManager({
   }
 
   return (
-    <Card className="p-4">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold mb-2">Resume Sections</h3>
-        <Button onClick={() => setShowAddDialog(true)} className="w-full" variant="outline" size="sm">
-          <Plus className="h-4 w-4 mr-2" />
+    <div>
+      <Button onClick={() => setShowAddDialog(true)} className="mb-4 w-full rounded-lg border-dashed" variant="outline" size="sm">
+          <Plus className="size-4" aria-hidden="true" />
           Add Section
-        </Button>
-      </div>
+      </Button>
 
       <div className="space-y-2">
         {sortedSections.map((section) => (
@@ -129,99 +126,89 @@ export default function SectionManager({
             onDragStart={(e) => handleDragStart(e, section.id)}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, section.id)}
-            className={`
-              flex items-center gap-2 p-2 rounded-md border cursor-pointer
-              ${activeSection === section.id ? "bg-primary/10 border-primary" : "hover:bg-accent"}
+            className={`group flex items-center gap-1.5 rounded-lg border p-1.5 transition-colors
+              ${activeSection === section.id ? "border-primary/50 bg-primary/5" : "hover:bg-muted/60"}
               ${draggedItem === section.id ? "opacity-50" : ""}
             `}
           >
-            <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab" />
-            <div className="flex-1" onClick={() => onSectionClick(section.id)}>
-              <p className="text-sm font-medium">{section.title}</p>
-            </div>
+            <GripVertical className="size-4 cursor-grab text-muted-foreground/60" aria-hidden="true" />
+            <button
+              type="button"
+              className="min-w-0 flex-1 px-1.5 py-1 text-left text-sm font-medium outline-none focus-visible:underline"
+              onClick={() => onSectionClick(section.id)}
+            >
+              <span className="block truncate">{section.title}</span>
+            </button>
             <Button
               variant="ghost"
-              size="sm"
-              className="h-8 w-8 p-0"
+              size="icon-sm"
+              className="text-muted-foreground"
+              aria-label={section.visible ? `Hide ${section.title}` : `Show ${section.title}`}
+              title={section.visible ? "Hide section" : "Show section"}
               onClick={(e) => {
                 e.stopPropagation()
                 onToggleVisibility(section.id)
               }}
             >
-              {section.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+              {section.visible ? <Eye className="size-3.5" /> : <EyeOff className="size-3.5" />}
             </Button>
             <Button
               variant="ghost"
-              size="sm"
-              className="h-8 w-8 p-0 text-destructive"
+              size="icon-sm"
+              className="text-muted-foreground hover:text-destructive"
+              aria-label={`Delete ${section.title}`}
+              title="Delete section"
               onClick={(e) => {
                 e.stopPropagation()
                 setDeleteConfirm(section.id)
               }}
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="size-3.5" />
             </Button>
           </div>
         ))}
       </div>
 
-      {/* Add Section Dialog */}
-      {showAddDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Card className="p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold mb-4">Add New Section</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">Section Type</label>
-                <Select value={newSectionType} onValueChange={(value) => setNewSectionType(value as SectionType)}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="executive-summary">Executive Summary / Bio</SelectItem>
-                    <SelectItem value="education">Education</SelectItem>
-                    <SelectItem value="research-interests">Research Interests</SelectItem>
-                    <SelectItem value="research-experience">Research & Development</SelectItem>
-                    <SelectItem value="experience">Leadership & Experience</SelectItem>
-                    <SelectItem value="professional-experience">Professional Experience</SelectItem>
-                    <SelectItem value="extracurricular">Extracurricular Activities</SelectItem>
-                    <SelectItem value="projects">Projects</SelectItem>
-                    <SelectItem value="publications">Publications</SelectItem>
-                    <SelectItem value="certifications">Certifications</SelectItem>
-                    <SelectItem value="skills">Technical Skills</SelectItem>
-                    <SelectItem value="awards">Awards & Recognitions</SelectItem>
-                    <SelectItem value="interests">Personal Interests</SelectItem>
-                    <SelectItem value="languages">Languages</SelectItem>
-                    <SelectItem value="custom">Custom Section</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {newSectionType === "custom" && (
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Section Title</label>
-                  <input
-                    type="text"
-                    value={newSectionTitle}
-                    onChange={(e) => setNewSectionTitle(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-md"
-                    placeholder="Enter section title"
-                  />
-                </div>
-              )}
-
-              <div className="flex gap-2 justify-end">
-                <Button variant="outline" onClick={() => setShowAddDialog(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={handleAddSection} disabled={newSectionType === "custom" && !newSectionTitle.trim()}>
-                  Add Section
-                </Button>
-              </div>
+      <AlertDialog open={showAddDialog} onOpenChange={setShowAddDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Add a resume section</AlertDialogTitle>
+            <AlertDialogDescription>Choose a structured section or create one of your own.</AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="space-y-4 py-1">
+            <div>
+              <label htmlFor="section-type" className="mb-2 block text-sm font-medium">Section type</label>
+              <Select value={newSectionType} onValueChange={(value) => setNewSectionType(value as SectionType)}>
+                <SelectTrigger id="section-type">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(sectionTypeLabels).map(([value, label]) => (
+                    <SelectItem key={value} value={value}>{label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-          </Card>
-        </div>
-      )}
+            {newSectionType === "custom" && (
+              <div>
+                <label htmlFor="section-title" className="mb-2 block text-sm font-medium">Section title</label>
+                <Input
+                  id="section-title"
+                  value={newSectionTitle}
+                  onChange={(e) => setNewSectionTitle(e.target.value)}
+                  placeholder="e.g. Volunteer work"
+                />
+              </div>
+            )}
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleAddSection} disabled={newSectionType === "custom" && !newSectionTitle.trim()}>
+              Add section
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deleteConfirm} onOpenChange={() => setDeleteConfirm(null)}>
@@ -248,6 +235,6 @@ export default function SectionManager({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </Card>
+    </div>
   )
 }
