@@ -1,111 +1,88 @@
-![Next.js](https://img.shields.io/badge/next.js-%5E15.0.0-black?logo=next.js)
-![React](https://img.shields.io/badge/react-%5E18.3.1-61DAFB?logo=react)
-![TypeScript](https://img.shields.io/badge/typescript-%5E5.x-3178C6?logo=typescript)
-![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-blue)
-[![GitHub stars](https://img.shields.io/github/stars/fnziad/ZeroTex?style=social)](https://github.com/fnziad/ZeroTex/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/fnziad/ZeroTex?style=social)](https://github.com/fnziad/ZeroTex/network/members)
+# ZeroTeX
 
-# ZeroTex
+[![Release](https://img.shields.io/badge/release-v1.0.0-2563eb)](./CHANGELOG.md)
+[![CI](https://github.com/fnziad/ZeroTex/actions/workflows/ci.yml/badge.svg)](https://github.com/fnziad/ZeroTex/actions/workflows/ci.yml)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 
-> **ZeroTex** — Zero code, pure LaTeX. Professional resume builder for modern developers, academics, and job seekers.
->
-> _Built by Fahad Nadim Ziad — where code meets craftsmanship._
+ZeroTeX is a local-first resume builder that turns structured career details into an ATS-friendly resume, printable PDF, and editable LaTeX source. No account or LaTeX knowledge is required.
 
----
+**Current release:** v1.0.0 · 19 July 2026
 
-## 🚀 Live Demo
+**Live application:** [zerotex.vercel.app](https://zerotex.vercel.app/)
 
-👉 [Try ZeroTex now!](https://zerotex.vercel.app/) — The app is live, fully functional, and ready for your next career move.
+**License:** Source-available; all rights reserved. See [LICENSE](./LICENSE).
 
----
+## Current features
 
-## 📝 Introduction
+- Guided editing for personal details, education, experience, research, projects, publications, skills, awards, certifications, interests, and custom sections.
+- Reorderable, hideable, and removable resume sections with a responsive live preview.
+- Local-first autosave using a versioned resume document format.
+- Size-limited and schema-validated JSON backup and restore, including migration from legacy local data.
+- Browser print/PDF flow, `.tex` download, and an explicit Overleaf handoff.
+- Responsive light and dark interfaces with self-hosted Geist typography.
+- Deterministic LaTeX generation covered by unit tests.
 
-ZeroTex is a next-generation resume/CV builder that outputs pure LaTeX for flawless typesetting and PDF quality. Designed for professionals, researchers, and students who demand beautiful, ATS-friendly resumes with zero coding required.
+Resume content remains in the browser during normal editing. Data leaves the browser only when the user deliberately invokes an external flow such as opening generated LaTeX in Overleaf. Vercel Analytics is enabled for aggregate application usage and does not intentionally receive resume content.
 
-- **Live and working:** ZeroTex is deployed and ready for use.
-- **v1 Prototype:** Actively developed, fully functional, and open to feedback.
-- **Source-Available:** Proprietary, with strong author ownership and protection.
+## Development
 
----
+### Requirements
 
-## ✨ Features
+- Node.js 22 or newer
+- pnpm 11.11.0, as declared by `packageManager`
 
-- **Zero Code, Pure LaTeX** — Instantly generate LaTeX resumes without writing a single line of code.
-- **Professional Templates** — Clean, minimal, and highly readable layouts.
-- **Live Preview** — See your resume update in real time as you edit.
-- **One-Click PDF Export** — Print or save as PDF with browser-native quality.
-- **ATS-Friendly** — Output is optimized for Applicant Tracking Systems.
-- **Custom Sections** — Add, remove, and reorder sections as needed.
-- **Dark/Light Mode** — Beautiful in any theme.
-
----
-
-## ⚡ Quick Start (For Developers)
+### Run locally
 
 ```sh
-# Clone the repo
 git clone https://github.com/fnziad/ZeroTex.git
 cd ZeroTex
-
-# Install dependencies
-pnpm install  # or npm install
-
-# Run locally
-pnpm dev      # or npm run dev
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
----
+Open [http://localhost:3000](http://localhost:3000).
 
-## 📄 License
+### Quality checks
 
-Copyright © 2025 Fahad Nadim Ziad (fnziad)
-All Rights Reserved
+```sh
+pnpm run lint
+pnpm run typecheck
+pnpm run test
+pnpm run build
+```
 
-This software and associated documentation files (the "Software") are the proprietary property of Fahad Nadim Ziad. No part of this Software may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of the copyright holder, except in the case of brief quotations embodied in critical reviews and certain other noncommercial uses permitted by copyright law.
+Run the complete local gate with `pnpm run check`. GitHub Actions repeats linting, type checks, tests, and the production build for pull requests and protected branches.
 
-For permission requests, contact: f.n.ziad@gmail.com
-
----
-
-## 👤 Author
-
-- **Fahad Nadim Ziad** ([fnziad](https://github.com/fnziad))
-- Email: f.n.ziad@gmail.com
-- GitHub: https://github.com/fnziad
-
----
-
-## 🛡️ Security & Legal Notice
-
-- All builds are watermarked and cryptographically signed for author protection.
-- Legal protection and anti-plagiarism steps are in place. For details or concerns, contact the author directly at f.n.ziad@gmail.com.
-
----
-
-## 📚 Citation
-
-If you use ZeroTex in your research or work, please cite it as:
+## Project structure
 
 ```text
-Fahad Nadim Ziad. ZeroTex: Professional Resume Builder. https://github.com/fnziad/ZeroTex
+app/                 Next.js routes, layouts, and the resume builder
+components/resume/   Editor forms, section management, preview, and export UI
+components/ui/       Shared interface primitives
+lib/                 Resume schema, document migration, LaTeX, and PDF logic
+public/              Static assets
 ```
 
----
+The versioned document contract in `lib/resume-document.ts` is the source of truth for browser persistence and portable backups. Product versioning is tracked in `package.json`; document schema versions evolve independently so older resume files can be migrated safely.
 
-## 🙏 Acknowledgements
+## Release and roadmap
 
-- Built with Next.js, React, Tailwind CSS, TypeScript, and shadcn/ui.
-- Inspired by the LaTeX typesetting system and modern design best practices.
+- [Changelog](./CHANGELOG.md) — shipped behavior and known limitations
+- [Upgrade roadmap](./ROADMAP.md) — prioritized v1.1–v2.0 feature plan
+- [Release guide](./RELEASE_GUIDE.md) — release verification and publishing process
 
----
+The next planned release is v1.1, focused on reducer-based editor state, undo/redo, visible save status, storage-failure handling, and browser-level regression tests.
 
-## 🖼️ Screenshots
+## Author and citation
 
-| Home Page (Light Mode)                                  | Builder UI (Light)                               | Builder UI (Dark, Example Loaded)                                              |
-| ------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
-| ![Home Page](public/screenshots/homepage_lightmode.png) | ![Builder UI](public/screenshots/builder_ui.png) | ![Builder UI Dark Mode](public/screenshots/builderui_darkmode_loadexample.png) |
+Created by [Fahad Nadim Ziad](https://github.com/fnziad).
 
-| Print/Export PDF                                                | Overleaf Import                                            |
-| --------------------------------------------------------------- | ---------------------------------------------------------- |
-| ![Print Resume as PDF](public/screenshots/print_resume_pdf.png) | ![Overleaf Import](public/screenshots/overleaf_import.png) |
+```text
+Fahad Nadim Ziad. ZeroTeX: Local-first LaTeX Resume Builder.
+https://github.com/fnziad/ZeroTex
+```
+
+Copyright © 2025–2026 Fahad Nadim Ziad. All rights reserved.

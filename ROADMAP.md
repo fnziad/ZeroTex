@@ -1,66 +1,91 @@
 # ZeroTeX Upgrade Roadmap
 
-ZeroTeX should become the fastest privacy-friendly path from structured career data to a polished, ATS-safe resume and clean LaTeX source. The roadmap prioritizes data durability first, then editing quality, job-specific guidance, and optional cloud capabilities.
+**Roadmap baseline:** v1.0.0 · 19 July 2026
 
-## Delivery principles
+**Next planned release:** v1.1 — Editing Confidence
 
-- Keep core resume creation usable without an account.
-- Treat the versioned resume document as the source of truth across browser storage, files, and future cloud sync.
-- Keep PDF and LaTeX output deterministic and covered by fixture tests.
-- Make AI-assisted features optional, explainable, and explicit about data handling.
-- Ship each phase with accessibility, mobile, security, performance, and migration checks.
+**Status:** Planning; implementation intentionally deferred
 
-## Prioritized feature track
+ZeroTeX should become the fastest privacy-friendly path from structured career data to a polished, ATS-safe resume and clean LaTeX source. Data durability and editing reliability come before templates, analysis, accounts, or AI.
 
-| Phase | Upgrade | User value | Effort | Depends on | Completion signal |
-| --- | --- | --- | --- | --- | --- |
-| 1 — In progress | Versioned resume documents, safe autosave, JSON backup/restore | Prevents data loss and makes resumes portable | Medium | — | Legacy data migrates; malformed imports fail safely; round-trip tests pass |
-| 1 | Undo/redo and visible save status | Makes editing forgiving and trustworthy | Medium | Versioned documents | Keyboard shortcuts work; history is bounded; save failures are visible |
-| 1 | Multiple local resumes | Lets users maintain role-specific versions without accounts | Medium | Versioned documents | Create, rename, duplicate, switch, and delete with confirmation |
-| 2 | Template system with typography and spacing controls | Produces visibly distinct professional resumes | High | Stable document model | At least three ATS-safe templates; deterministic PDF/LaTeX snapshots |
-| 2 | ATS and content quality analyzer | Finds missing keywords, vague bullets, length issues, and parsing risks | High | Stable section schemas | Actionable scoring rubric with explanations and no opaque score-only output |
-| 2 | Job-description tailoring workspace | Compares a resume with a target role and suggests focused changes | High | Analyzer | Keyword coverage and suggestions are traceable to supplied job text |
-| 2 | First-class mobile editor and accessibility pass | Makes the full workflow usable beyond desktop | Medium | Editor component cleanup | WCAG 2.2 AA checks, keyboard flow, and responsive preview controls pass |
-| 3 | Optional accounts and encrypted cloud sync | Enables cross-device continuity | High | Versioned documents, authentication, database | Offline-first conflict handling and export/delete controls are verified |
-| 3 | Version history and named snapshots | Lets users safely experiment and restore earlier drafts | Medium | Cloud or local resume library | Diff, label, restore, and retention behavior are tested |
-| 3 | Private share links and reviewer comments | Supports feedback without sending editable source files | High | Accounts and authorization | Revocable links, expiration, access logs, and comment permissions work |
-| 4 | Sandboxed LaTeX compilation service | Produces server-grade PDFs without requiring local TeX | High | Queue, sandbox, storage, abuse controls | Compilation is isolated, resource-limited, cached, and observable |
-| 4 | Template marketplace and organization themes | Expands design choice and supports schools/teams | High | Template system, moderation | Signed template packages and safe rendering validation are enforced |
+## Shipped baseline: v1.0.0
 
-## Engineering and operations track
+- Modern responsive landing page and builder with light and dark themes.
+- Versioned `zerotex-resume` document schema and legacy-data migration.
+- Guarded local autosave with invalid-data recovery preservation.
+- Size-limited, schema-validated JSON backup and restore.
+- Live preview, browser PDF/print flow, LaTeX download, and Overleaf handoff.
+- Dynamic resume sections and deterministic LaTeX generation.
+- Reproducible pnpm installs and CI gates for lint, types, tests, and builds.
+- Dependency, security, dead-code, performance, and maintainability hardening.
 
-### Reliability and testing
+Current limitations are documented in [CHANGELOG.md](./CHANGELOG.md).
 
-- Add browser-level tests for autosave, migration, import/export, editing, print flow, and downloads.
-- Add fixture-based regression tests for every supported section type and template.
+## Release plan
+
+| Release | Theme | Planned user-facing work | Foundation and acceptance criteria |
+| --- | --- | --- | --- |
+| **v1.1** | Editing Confidence | Undo/redo, keyboard shortcuts, visible save status, safer reset/restore flows | Tested reducer; bounded history; quota and storage failures are visible; autosave and refresh recovery pass browser tests |
+| **v1.2** | Resume Library | Create, rename, duplicate, search, switch, archive, and delete multiple local resumes | Stable resume IDs and metadata; safe migration from the single-resume store; confirmed destructive actions |
+| **v1.3** | Templates and Layout | Three ATS-safe templates, typography and spacing controls, page-overflow warnings | Typed template contract; deterministic LaTeX/PDF fixtures; A4 and US Letter coverage |
+| **v1.4** | Explainable ATS Review | Weak-bullet, missing-section, length, parsing-risk, and content-quality guidance | Deterministic rules; explanations for every finding; no opaque score-only result |
+| **v1.5** | Job Tailoring | Compare a resume with pasted job text and suggest focused changes | Keywords and suggestions trace back to supplied text; original resume is never overwritten automatically |
+| **v2.0** | Optional Continuity | Accounts, encrypted cloud sync, version history, named snapshots, and private review links | Offline-first conflicts; authorization tests; revocable links; export and deletion controls |
+
+## v1.1 implementation plan
+
+1. Replace remaining loosely typed section payloads with a discriminated `ResumeSection` union.
+2. Move builder mutations into a tested reducer with explicit actions.
+3. Add bounded undo/redo history and `Cmd/Ctrl+Z` shortcuts without recording hydration or autosave events.
+4. Surface `Saving`, `Saved locally`, and `Save failed` states with accessible status announcements.
+5. Handle storage quota, disabled storage, corrupt documents, and failed restores without losing the current draft.
+6. Add browser tests for autosave, refresh recovery, legacy migration, import/export, reset, undo, and redo.
+7. Lazy-load editor-only PDF code and add route-level bundle budgets.
+8. Add a restrictive Content Security Policy after verifying analytics and Overleaf flows.
+
+### v1.1 completion gate
+
+- Lint, TypeScript, unit tests, browser tests, and production build pass from a clean checkout.
+- Keyboard and screen-reader save feedback work on desktop and mobile layouts.
+- Undo history is bounded and cannot cross resume import/reset boundaries unexpectedly.
+- Storage and migration failure fixtures demonstrate that recoverable user data is preserved.
+- Public production smoke checks pass with no browser-console errors.
+
+## Later feature ideas
+
+- GitHub and user-approved profile imports.
+- One-click Overleaf project creation.
+- Cover letters generated from a reusable career profile.
+- Application-specific resume variants and an application tracker.
+- Side-by-side version comparison and named checkpoints.
+- Multilingual resumes and locale-aware dates.
+- Optional, privacy-conscious AI rewriting with explicit data-handling controls.
+- School and organization template packs.
+- Sandboxed, resource-limited server-side LaTeX compilation.
+
+## Ongoing engineering track
+
+### Reliability
+
+- Add fixtures for every supported section and template.
 - Test fresh-checkout CI separately from incremental local builds.
-- Add explicit storage quota, corrupted document, offline, and migration failure scenarios.
+- Cover corrupted data, offline operation, storage quotas, and migrations.
 
 ### Security and privacy
 
-- Add a restrictive Content Security Policy after auditing the Overleaf submission and analytics paths.
-- Keep imported documents size-limited, schema-validated, and free of executable content.
-- Threat-model any future authentication, sharing, AI, and LaTeX compilation features before implementation.
-- Provide clear local-data deletion and cloud account export/deletion controls.
+- Threat-model authentication, sharing, AI, imports, and LaTeX compilation before implementation.
+- Keep imports size-limited, schema-validated, and free of executable content.
+- Provide clear local-data deletion and future cloud export/deletion controls.
 
 ### Performance and observability
 
-- Lazy-load PDF generation and editor-only dependencies to reduce initial JavaScript.
-- Track Core Web Vitals, route errors, PDF failures, and migration failures without collecting resume content.
-- Add bundle budgets and route-level bundle analysis to CI.
-- Virtualize or progressively render large section collections if real documents show editor lag.
+- Track Core Web Vitals, route failures, export failures, and migrations without collecting resume content.
+- Lazy-load editor-only dependencies and enforce bundle budgets in CI.
+- Progressively render unusually large resumes only if real measurements show editor lag.
 
 ### Maintainability
 
-- Replace remaining `any` section payloads with a discriminated `ResumeSection` union.
-- Extract the builder state transitions into a tested reducer before adding undo/redo.
-- Centralize file download and filename sanitization helpers.
-- Keep dependency and GitHub Actions updates automated, grouped, and gated by the full verification suite.
-
-## Recommended next implementation order
-
-1. Finish Phase 1 document portability and autosave hardening.
-2. Add a reducer-based editor history with undo/redo and save status.
-3. Build the multiple-resume local library on the same document schema.
-4. Introduce a typed template contract and ship two additional ATS-safe templates.
-5. Add deterministic analyzer rules before introducing optional AI suggestions.
+- Keep the resume document contract versioned and migration-tested.
+- Centralize filename sanitization and browser download helpers.
+- Automate dependency and GitHub Actions updates behind the full verification suite.
+- Update README, changelog, roadmap, and package version together for every release.

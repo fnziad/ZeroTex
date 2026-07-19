@@ -44,7 +44,7 @@ export default function HomePage() {
           <div>
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border bg-background/80 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur">
               <span className="size-1.5 rounded-full bg-emerald-500" />
-              Open source · Local-first
+              Source available · Local-first
             </div>
             <h1
               id="hero-title"

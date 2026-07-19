@@ -8,15 +8,18 @@
     "email": "f.n.ziad@gmail.com",
     "url": "https://github.com/fnziad"
   },
-  "description": "ZeroTex - Zero code, pure LaTeX. A modern resume/CV builder with professional LaTeX output.",
+  "description": "ZeroTeX is a local-first resume builder with live preview, portable backups, PDF export, and clean LaTeX output.",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fnziad/zerotex.git"
+    "url": "https://github.com/fnziad/ZeroTex.git"
   },
-  "homepage": "https://github.com/fnziad/zerotex",
+  "homepage": "https://zerotex.vercel.app",
   "bugs": {
-    "url": "https://github.com/fnziad/zerotex/issues"
+    "url": "https://github.com/fnziad/ZeroTex/issues"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   },
   "keywords": [
     "resume",
