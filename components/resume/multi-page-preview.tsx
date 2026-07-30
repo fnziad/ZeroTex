@@ -13,14 +13,18 @@ export default function MultiPagePreview({ data }: MultiPagePreviewProps) {
       className="bg-white relative"
       style={{
         width: "min(210mm, 100%)",
-        aspectRatio: "210 / 297",
-        minHeight: "fit-content",
+        // Keep the A4 width and minimum page height, but let long resumes grow
+        // naturally. A forced aspect ratio makes content overflow below an
+        // artificial page boundary and looks like a broken second page.
+        minHeight: "297mm",
+        height: "max-content",
         padding: "clamp(24px, 2vw, 12mm) clamp(28px, 3vw, 18mm)",
         fontSize: "10pt",
         lineHeight: "1.2",
         boxSizing: "border-box",
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-        textAlign: "justify" as const
+        textAlign: "justify" as const,
+        overflow: "visible",
       }}
     >
       <ResumePreview data={data} />

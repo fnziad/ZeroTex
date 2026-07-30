@@ -466,7 +466,7 @@ export default function BuilderPage() {
             <h2 className="text-xs font-medium text-white/85">Live preview</h2>
             <p className="mt-0.5 text-[10px] text-white/40">Updates as you edit</p>
           </div>
-          <span className="rounded-md border border-white/10 bg-white/5 px-2 py-1 font-mono text-[10px] text-white/55">A4 · 100%</span>
+          <span className="rounded-md border border-white/10 bg-white/5 px-2 py-1 font-mono text-[10px] text-white/55">A4 · scrollable</span>
         </div>
         <div className="flex-1 overflow-x-hidden overflow-y-auto" style={{ scrollbarWidth: "thin", scrollbarColor: "#5b6068 #2f3237" }}>
           <div className="flex flex-col items-center gap-4 px-5 py-7">
