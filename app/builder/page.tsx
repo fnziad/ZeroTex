@@ -282,8 +282,8 @@ export default function BuilderPage() {
       setSelectedSectionId(null)
       
       toast({
-        title: "✅ Example Loaded!",
-        description: "Levi Ackerman's resume loaded successfully. Feel free to edit!",
+        title: "Software delivery example loaded",
+        description: "A work, research, and software-project profile is ready to customize.",
       })
     } catch (error) {
       console.error("Error loading example:", error)
@@ -385,7 +385,7 @@ export default function BuilderPage() {
                 className="h-8 rounded-md px-2.5 text-xs"
               >
                 <FileText className="size-3.5" aria-hidden="true" />
-                Example
+                Software example
               </Button>
               <Button
                 onClick={handleOpenInOverleaf}

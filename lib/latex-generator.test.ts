@@ -13,11 +13,14 @@ describe("generateLatex", () => {
     expect(latex).toContain("\\end{document}")
   })
 
-  it("renders the example project schema used by the editor", () => {
+  it("renders separate work, research, and software-project sections from the example", () => {
     const latex = generateLatex(exampleResumeData)
 
-    expect(latex).toContain("Operation Reclaim Wall Maria")
-    expect(latex).toContain("Led critical squad operations")
+    expect(latex).toContain("WORK EXPERIENCE")
+    expect(latex).toContain("RESEARCH EXPERIENCE")
+    expect(latex).toContain("SOFTWARE PROJECTS")
+    expect(latex).toContain("Release Readiness Hub")
+    expect(latex).toContain("Developer Workflow Analytics for Software Teams")
   })
 
   it("escapes LaTeX control characters in user-authored fields", () => {

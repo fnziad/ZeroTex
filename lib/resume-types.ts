@@ -142,16 +142,24 @@ export const defaultResumeData: ResumeData = {
     {
       id: "experience-1",
       type: "experience",
-      title: "Experience",
+      title: "Work Experience",
       order: 1,
       visible: true,
       data: [] as Experience[],
     },
     {
+      id: "research-experience-1",
+      type: "research-experience",
+      title: "Research Experience",
+      order: 2,
+      visible: true,
+      data: [] as ResearchExperience[],
+    },
+    {
       id: "skills-1",
       type: "skills",
-      title: "Skills",
-      order: 2,
+      title: "Software & Delivery Skills",
+      order: 3,
       visible: true,
       data: {
         categories: [
@@ -164,8 +172,8 @@ export const defaultResumeData: ResumeData = {
     {
       id: "projects-1",
       type: "projects",
-      title: "Projects",
-      order: 3,
+      title: "Software Projects",
+      order: 4,
       visible: true,
       data: [],
     },
